@@ -150,9 +150,7 @@ export class Billy<T = unknown> {
 
     const memoryPrompt = this.buildMemoryPrompt(prompt);
 
-    const fullPrompt = schema
-      ? this.buildPrompt(type, memoryPrompt, returnType, length)
-      : this.buildPrompt(type, memoryPrompt, returnType, length);
+    const fullPrompt = this.buildPrompt(type, memoryPrompt, returnType, length, schema);
 
     const tools = this._tools.length > 0 ? this._tools : undefined;
     this._tools = [];
@@ -163,7 +161,7 @@ export class Billy<T = unknown> {
     const allMessages: { role: string; content: string }[] = [];
     const maxToolIterations = 10;
 
-    for (let iteration = 0; iteration <= maxToolIterations; iteration++) {
+    for (let iteration = 0; iteration < maxToolIterations; iteration++) {
       const response: BillyResponse = await this.client.chat(
         currentPrompt,
         this._systemPrompt,
@@ -311,6 +309,7 @@ export class Billy<T = unknown> {
     prompt: string,
     returnType?: ReturnType,
     length?: ResponseLength,
+    schema?: SchemaDef,
   ): string {
     const taskInstructions: Record<TaskFunction, string> = {
       create: `Genera contenido nuevo basándote en la siguiente solicitud:`,
@@ -342,8 +341,8 @@ export class Billy<T = unknown> {
       long: "\n\nResponde de manera detallada y completa.",
     };
 
-    const schemaInstruction = this._schema
-      ? `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla EXACTAMENTE esta estructura:\n${schemaToPrompt(this._schema)}\n\nSin markdown, sin texto adicional, sin explicaciones.`
+    const schemaInstruction = schema
+      ? `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla EXACTAMENTE esta estructura:\n${schemaToPrompt(schema)}\n\nSin markdown, sin texto adicional, sin explicaciones.`
       : "";
 
     const typeInstruction = returnType

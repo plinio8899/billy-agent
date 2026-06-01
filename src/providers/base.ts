@@ -147,13 +147,13 @@ export abstract class BaseProvider implements ChatProvider {
 
           const content = response.content.trim();
           if (response.usage) {
-            this.lastUsage = response.usage;
+            this.lastUsage = { ...response.usage };
           }
 
           const result: BillyResponse = { content };
           if (response.toolCalls) result.toolCalls = response.toolCalls;
           if (this.lastUsage) {
-            result.usage = this.lastUsage;
+            result.usage = { ...this.lastUsage };
             const cost = this.estimateCost(this.lastUsage);
             if (cost !== undefined) {
               (

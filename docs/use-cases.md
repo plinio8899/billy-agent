@@ -17,7 +17,7 @@ const datos = await IA
     total: "number",
     items: ["string"],
   })
-  .extract("Extrae los datos de esta factura: {{texto}}", { texto: facturaTxt });
+  .extract(`Extrae los datos de esta factura: ${facturaTxt}`);
 ```
 
 📄 `examples/invoice-extractor.mjs`
@@ -31,7 +31,7 @@ Clasifica automáticamente tickets por categoría, urgencia y sentimiento.
 ```javascript
 const clasificacion = await IA
   .schema({ categoria: "string", urgencia: "string", sentimiento: "string" })
-  .validate("Clasifica este ticket:\n\n{{ticket}}", { ticket });
+  .validate(`Clasifica este ticket:\n\n${ticket}`);
 ```
 
 📄 `examples/ticket-classifier.mjs`
@@ -71,7 +71,7 @@ Analiza el sentimiento de textos con estructura detallada.
 ```javascript
 const analisis = await IA
   .schema({ sentimiento: "string", puntuacion: "number", emociones: ["string"] })
-  .analyze('Analiza: "{{texto}}"', { texto });
+  .analyze(`Analiza: "${texto}"`);
 ```
 
 📄 `examples/sentiment-analysis.mjs`
@@ -83,10 +83,11 @@ const analisis = await IA
 Genera emails profesionales con diferentes tonos y propósitos.
 
 ```javascript
+const tipo = "presentación";
+const contexto = "nuevo cliente";
 IA.system("Eres un redactor profesional. Tono: cordial.");
 const email = await IA.create(
-  "Redacta un email de {{tipo}} sobre: {{contexto}}",
-  { tipo: "presentación", contexto: "nuevo cliente" }
+  `Redacta un email de ${tipo} sobre: ${contexto}`
 );
 ```
 
@@ -102,7 +103,7 @@ Extrae información clave de emails largos.
 const resumen = await IA
   .schema({ asunto: "string", acciones_requeridas: ["string"], urgencia: "string" })
   .short()
-  .extract("Resume este email:\n\n{{email}}", { email });
+  .extract(`Resume este email:\n\n${email}`);
 ```
 
 📄 `examples/email-summarizer.mjs`
@@ -116,7 +117,7 @@ Resume archivos de texto extrayendo puntos clave.
 ```javascript
 const resumen = await IA
   .schema({ titulo: "string", puntos_clave: ["string"], resumen: "string" })
-  .extract("Resume este documento:\n\n{{texto}}", { texto });
+  .extract(`Resume este documento:\n\n${texto}`);
 ```
 
 📄 `examples/pdf-summarizer.mjs`
@@ -130,7 +131,7 @@ Modera comentarios según políticas de comunidad.
 ```javascript
 const moderacion = await IA
   .schema({ es_aceptable: "boolean", categoria: "string", accion: "string" })
-  .validate('Modera: "{{comentario}}"', { comentario });
+  .validate(`Modera: "${comentario}"`);
 ```
 
 📄 `examples/content-moderator.mjs`
@@ -161,8 +162,7 @@ Responde preguntas usando contexto inyectado vía variables.
 
 ```javascript
 const respuesta = await IA.create(
-  "Usando SOLO esta documentación:\n---\n{{docs}}\n---\n\nPregunta: {{pregunta}}",
-  { docs: documentacion, pregunta }
+  `Usando SOLO esta documentación:\n---\n${docs}\n---\n\nPregunta: ${pregunta}`
 );
 ```
 
