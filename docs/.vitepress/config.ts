@@ -12,7 +12,7 @@ export default defineConfig({
       {
         property: "og:description",
         content:
-          "Simple AI SDK for Node.js — generate, modify, validate, analyze, extract, and execute with natural language prompts",
+          "The easiest AI SDK for Node.js. Supports Groq, OpenAI, and Anthropic. Type conversion, streaming, memory, tool calling, and more.",
       },
     ],
     [
@@ -28,12 +28,20 @@ export default defineConfig({
       {
         name: "twitter:description",
         content:
-          "Simple AI SDK for Node.js — generate, modify, validate, analyze, extract, and execute with natural language prompts",
+          "The easiest AI SDK for Node.js. Supports Groq, OpenAI, and Anthropic. Type conversion, streaming, memory, tool calling, and more.",
       },
     ],
     [
       "meta",
       { name: "twitter:image", content: "/billy-sdk/og-image.png" },
+    ],
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/billy-sdk/hero-icon.svg",
+      },
     ],
   ],
   themeConfig: {
