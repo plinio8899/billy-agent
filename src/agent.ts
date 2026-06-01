@@ -150,7 +150,13 @@ export class Billy<T = unknown> {
 
     const memoryPrompt = this.buildMemoryPrompt(prompt);
 
-    const fullPrompt = this.buildPrompt(type, memoryPrompt, returnType, length, schema);
+    const fullPrompt = this.buildPrompt(
+      type,
+      memoryPrompt,
+      returnType,
+      length,
+      schema,
+    );
 
     const tools = this._tools.length > 0 ? this._tools : undefined;
     this._tools = [];
